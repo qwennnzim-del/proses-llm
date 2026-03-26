@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --animate-slide: slide 1.5s linear infinite;
+  --animate-slide-right: slide-right 1.5s linear infinite;
   --animate-slide-down: slide-down 1.5s linear infinite;
+  --animate-spin-slow: spin 3s linear infinite;
 }
 
-@keyframes slide {
+@keyframes slide-right {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
@@ -24,4 +25,12 @@
   to {
     stroke-dashoffset: -16;
   }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

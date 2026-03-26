@@ -1,146 +1,304 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
 
-const AnimatedBorder = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
-  return (
-    <div className={`relative overflow-hidden rounded-xl p-[3px] shadow-md bg-gray-200 ${className}`}>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] animate-[spin_2.5s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0%,transparent_75%,#3b82f6_90%,#ef4444_100%)]" />
-      <div className="relative z-10 h-full w-full rounded-lg bg-white flex items-center justify-center p-4">
-        {children}
-      </div>
+const GradientBox = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+  <div className={`relative overflow-hidden rounded-xl p-[2px] shadow-md h-full bg-slate-50 ${className}`}>
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-red-200 opacity-40" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250%] h-[250%] animate-[spin_2.5s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0%,transparent_30%,#0ea5e9_60%,#3b82f6_80%,#ef4444_100%)]" />
+    <div className="relative z-10 bg-white rounded-[10px] h-full w-full px-5 py-3 flex items-center justify-between text-gray-800 font-medium">
+      {children}
     </div>
-  );
-};
-
-const Node = ({ title, subtitle, className = "" }: { title: string, subtitle?: string, className?: string }) => (
-  <div className={`w-full h-full bg-gray-50 rounded-xl p-4 flex flex-col justify-center shadow-sm border border-gray-200 relative overflow-hidden group hover:border-blue-300 transition-colors ${className}`}>
-    <div className="font-medium text-gray-800 relative z-10">{title}</div>
-    {subtitle && <div className="text-sm text-gray-500 mt-1 relative z-10">{subtitle}</div>}
-    <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
   </div>
 );
 
-const Label = ({ children }: { children: React.ReactNode }) => (
-  <div className="px-5 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-600 shadow-sm whitespace-nowrap">
+const NormalBox = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+  <div className={`bg-[#f4f5f7] rounded-xl px-5 py-3 flex items-center text-gray-700 text-sm leading-relaxed shadow-sm h-full ${className}`}>
     {children}
   </div>
 );
 
-const ArrowRight = () => (
-  <div className="w-full relative h-full flex items-center">
-    <div className="w-full h-[2px] bg-gray-200 relative overflow-hidden">
-        <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-slide" style={{ transform: 'translateX(-100%)' }}></div>
-    </div>
-    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 border-t-2 border-r-2 border-gray-300 transform rotate-45"></div>
+const LabelPill = ({ children }: { children: React.ReactNode }) => (
+  <div className="px-6 py-2 rounded-full border border-gray-200 text-gray-600 text-sm bg-white shadow-sm whitespace-nowrap">
+    {children}
   </div>
 );
 
 const ArrowDown = () => (
-  <div className="h-full w-full relative flex justify-center">
-    <div className="h-full w-[2px] bg-gray-200 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent animate-slide-down" style={{ transform: 'translateY(-100%)' }}></div>
-    </div>
-    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 border-b-2 border-r-2 border-gray-300 transform rotate-45"></div>
-  </div>
+  <svg className="w-full h-full" viewBox="0 0 224 40" preserveAspectRatio="none">
+    <defs>
+      <marker id="arrowhead-down" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#9ca3af" />
+      </marker>
+    </defs>
+    <path d="M 112 0 L 112 36" fill="none" stroke="#9ca3af" strokeWidth="2" markerEnd="url(#arrowhead-down)" />
+  </svg>
+);
+
+const ArrowRight = () => (
+  <svg className="w-full h-full" viewBox="0 0 48 80" preserveAspectRatio="none">
+    <defs>
+      <marker id="arrowhead-right" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#9ca3af" />
+      </marker>
+    </defs>
+    <path d="M 0 40 L 44 40" fill="none" stroke="#9ca3af" strokeWidth="2" markerEnd="url(#arrowhead-right)" />
+  </svg>
+);
+
+const BracketArrow = () => (
+  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 320" preserveAspectRatio="none">
+    <defs>
+      <marker id="arrowhead-bracket" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#9ca3af" />
+      </marker>
+    </defs>
+    {/* Vertical spine connecting top and bottom */}
+    <path d="M 0 40 L 32 40 L 32 280 L 0 280" fill="none" stroke="#9ca3af" strokeWidth="2" />
+    {/* Middle connection to spine */}
+    <path d="M 0 160 L 32 160" fill="none" stroke="#9ca3af" strokeWidth="2" />
+    {/* Output arrow to the right */}
+    <path d="M 32 160 L 60 160" fill="none" stroke="#9ca3af" strokeWidth="2" markerEnd="url(#arrowhead-bracket)" />
+  </svg>
 );
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center py-16 font-sans overflow-x-auto">
-      
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" fill="#d1d5db" />
-          </marker>
-        </defs>
-      </svg>
-
-      <div className="text-center mb-16 px-4">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Zhiyou 4.5 Pro Development Roadmap</h1>
-        <p className="text-gray-500 max-w-2xl mx-auto text-lg">
-          Alur pemrosesan informasi dan pelatihan model AI LLM dari pengumpulan data hingga tahap fine-tuning.
-        </p>
-      </div>
-
-      <div className="flex justify-center w-full min-w-[1200px] px-8">
-        <div className="grid grid-cols-[12rem_16rem_4rem_16rem_6rem_18rem] gap-y-0">
+    <div className="min-h-screen bg-white flex flex-col items-center py-16 px-8 font-sans">
+      <div className="w-full max-w-7xl overflow-x-auto pb-12">
+        <div className="min-w-[1100px] flex flex-col items-center">
           
-          {/* Top Node */}
-          <div className="col-start-2 flex justify-center mb-2">
-            <AnimatedBorder className="w-full h-20">
-              <div className="text-center font-semibold text-gray-800">
-                Zhiyou 4.5 Pro Pipeline
-              </div>
-            </AnimatedBorder>
-          </div>
+          <h2 className="text-3xl font-bold text-gray-800 mb-10 tracking-tight">Zhiyou 4.5 Pro Use Cases</h2>
+          <div className="grid grid-cols-[10rem_2rem_14rem_3rem_16rem_4rem_16rem] gap-y-0 items-center w-full">
+            
+            {/* Row 1 */}
+            <div className="col-start-3 h-20 py-2">
+              <GradientBox>
+                <span className="animate-pulse">Zhiyou 4.5 Pro Use case</span>
+              </GradientBox>
+            </div>
 
-          {/* Top Arrow */}
-          <div className="col-start-2 h-10">
-            <ArrowDown />
-          </div>
+            {/* Row 2 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
 
-          {/* Row 1 */}
-          <div className="h-[100px] flex items-center justify-end pr-8"><Label>Information Input</Label></div>
-          <div className="h-[100px] flex items-center"><Node title="Raw Data Collection" subtitle="Text, Code, Images" /></div>
-          <div className="h-[100px] flex items-center justify-center"><ArrowRight /></div>
-          <div className="h-[100px] flex items-center"><Node title="Tokenization & Vectorization" subtitle="Data Cleaning, Deduplication" /></div>
-          <div className="h-[100px] relative">
-            <svg className="absolute inset-0 w-full h-full" style={{ overflow: 'visible' }}>
-              <path d="M 0 50 L 48 50 L 48 190 L 96 190" fill="none" stroke="#e5e7eb" strokeWidth="2" className="animated-path" markerEnd="url(#arrowhead)" />
-            </svg>
-          </div>
-          <div className="row-span-5 flex items-center pl-4">
-            <AnimatedBorder className="w-full h-[220px]">
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="font-bold text-xl text-gray-900 mb-2">Zhiyou 4.5 Pro</div>
-                <div className="text-sm text-gray-500 mb-4">(Instruct & Chat Model)</div>
-                <Sparkles className="w-6 h-6 text-blue-500 animate-pulse" />
-              </div>
-            </AnimatedBorder>
-          </div>
+            {/* Row 3 */}
+            <div className="col-start-1 h-20 flex justify-end items-center pr-4">
+              <LabelPill>Modality</LabelPill>
+            </div>
+            <div className="col-start-3 h-20 py-2">
+              <NormalBox>Text, image</NormalBox>
+            </div>
+            <div className="col-start-4 h-20">
+              <ArrowRight />
+            </div>
+            <div className="col-start-5 h-20 py-2">
+              <NormalBox>
+                <span>Audio, Video input<br/>Image generation...</span>
+              </NormalBox>
+            </div>
 
-          {/* Arrow Row 1->2 */}
-          <div className="col-start-2 h-10"><ArrowDown /></div>
+            {/* Row 4 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
 
-          {/* Row 2 */}
-          <div className="h-[100px] flex items-center justify-end pr-8"><Label>Core Learning</Label></div>
-          <div className="h-[100px] flex items-center"><Node title="Pre-training Phase" subtitle="Next-Token Prediction" /></div>
-          <div className="h-[100px] flex items-center justify-center"><ArrowRight /></div>
-          <div className="h-[100px] flex items-center"><Node title="Neural Network Weights" subtitle="Self-Attention Mechanism" /></div>
-          <div className="h-[100px] relative">
-            <svg className="absolute inset-0 w-full h-full" style={{ overflow: 'visible' }}>
-              <path d="M 0 50 L 96 50" fill="none" stroke="#e5e7eb" strokeWidth="2" className="animated-path" markerEnd="url(#arrowhead)" />
-            </svg>
-          </div>
+            {/* Row 5 */}
+            <div className="col-start-1 h-20 flex justify-end items-center pr-4">
+              <LabelPill>Complexity</LabelPill>
+            </div>
+            <div className="col-start-3 h-20 py-2">
+              <NormalBox>
+                <span>Summarize,<br/>proofread, rewrite...</span>
+              </NormalBox>
+            </div>
+            <div className="col-start-4 h-20">
+              <ArrowRight />
+            </div>
+            <div className="col-start-5 h-20 py-2">
+              <NormalBox>
+                <span>Requires<br/>domain knowledge...</span>
+              </NormalBox>
+            </div>
 
-          {/* Arrow Row 2->3 */}
-          <div className="col-start-2 h-10"><ArrowDown /></div>
+            {/* Row 6 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
 
-          {/* Row 3 */}
-          <div className="h-[100px] flex items-center justify-end pr-8"><Label>Refinement</Label></div>
-          <div className="h-[100px] flex items-center"><Node title="Supervised Fine-Tuning" subtitle="Instruction Following" /></div>
-          <div className="h-[100px] flex items-center justify-center"><ArrowRight /></div>
-          <div className="h-[100px] flex items-center"><Node title="RLHF & DPO" subtitle="Human Feedback Alignment" /></div>
-          <div className="h-[100px] relative">
-            <svg className="absolute inset-0 w-full h-full" style={{ overflow: 'visible' }}>
-              <path d="M 0 50 L 48 50 L 48 -90 L 96 -90" fill="none" stroke="#e5e7eb" strokeWidth="2" className="animated-path" markerEnd="url(#arrowhead)" />
-            </svg>
-          </div>
+            {/* Row 7 */}
+            <div className="col-start-1 h-20 flex justify-end items-center pr-4">
+              <LabelPill>Context Window</LabelPill>
+            </div>
+            <div className="col-start-3 h-20 py-2">
+              <NormalBox>
+                <span>Short input and<br/>output</span>
+              </NormalBox>
+            </div>
+            <div className="col-start-4 h-20">
+              <ArrowRight />
+            </div>
+            <div className="col-start-5 h-20 py-2">
+              <NormalBox>
+                <span>Extensive documents,<br/>hours of audio/video...</span>
+              </NormalBox>
+            </div>
 
-          {/* Bottom Arrow */}
-          <div className="col-start-2 h-12 mt-2"><ArrowDown /></div>
+            {/* Row 8 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
 
-          {/* Bottom Node */}
-          <div className="col-start-2 flex justify-center mt-2">
-            <AnimatedBorder className="w-full h-20">
-              <div className="flex items-center justify-center gap-2">
-                <div className="text-center font-semibold text-gray-800">
-                  Zhiyou 4.5 Base Model
+            {/* Row 9 */}
+            <div className="col-start-3 h-20 py-2">
+              <GradientBox>
+                <div className="flex items-center justify-between w-full">
+                  <span>On-device GenAI<br/>(Zhiyou 4.5 Pro Nano)</span>
+                  <Sparkles className="text-blue-500 w-6 h-6 ml-2 shrink-0" />
                 </div>
-                <Sparkles className="w-5 h-5 text-blue-500 animate-pulse" />
+              </GradientBox>
+            </div>
+
+            {/* Bracket Arrow (Spans Row 3 to 7) */}
+            <div className="col-start-6 row-start-3 row-end-8 h-full relative">
+              <BracketArrow />
+            </div>
+
+            {/* Final Box (Spans Row 3 to 7) */}
+            <div className="col-start-7 row-start-3 row-end-8 h-full flex items-center py-2">
+              <div className="h-28 w-full">
+                <GradientBox>
+                  <div className="flex items-center justify-between w-full">
+                    <span>Zhiyou AI SDKs<br/>(Zhiyou 4.5 Pro,<br/>Flash, Vision)</span>
+                    <Sparkles className="text-blue-500 w-6 h-6 ml-2 shrink-0" />
+                  </div>
+                </GradientBox>
               </div>
-            </AnimatedBorder>
+            </div>
+
+          </div>
+
+          {/* DIVIDER */}
+          <div className="h-24 w-full border-b-2 border-dashed border-gray-200 my-12 relative max-w-5xl">
+             <div className="absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 bg-white px-6 text-blue-500 text-sm font-bold tracking-widest uppercase flex items-center gap-3">
+                <Sparkles className="w-4 h-4" />
+                Development Phase
+                <Sparkles className="w-4 h-4" />
+             </div>
+          </div>
+
+          {/* DIAGRAM 2: MODEL CREATION PROCESS */}
+          <h2 className="text-3xl font-bold text-gray-800 mt-12 mb-10 tracking-tight">Zhiyou 4.5 Pro Model Creation Process</h2>
+          <div className="grid grid-cols-[10rem_2rem_14rem_3rem_16rem_4rem_16rem] gap-y-0 items-center w-full">
+            
+            {/* Row 1 */}
+            <div className="col-start-3 h-20 py-2">
+              <GradientBox>
+                <span className="animate-pulse">Zhiyou 4.5 Pro Training Pipeline</span>
+              </GradientBox>
+            </div>
+
+            {/* Row 2 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
+
+            {/* Row 3 */}
+            <div className="col-start-1 h-20 flex justify-end items-center pr-4">
+              <LabelPill>Data Pipeline</LabelPill>
+            </div>
+            <div className="col-start-3 h-20 py-2">
+              <NormalBox>
+                <span>Massive Multilingual Text<br/>& Multimodal Data</span>
+              </NormalBox>
+            </div>
+            <div className="col-start-4 h-20">
+              <ArrowRight />
+            </div>
+            <div className="col-start-5 h-20 py-2">
+              <NormalBox>
+                <span>Data Filtering, Deduplication<br/>& Tokenization</span>
+              </NormalBox>
+            </div>
+
+            {/* Row 4 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
+
+            {/* Row 5 */}
+            <div className="col-start-1 h-20 flex justify-end items-center pr-4">
+              <LabelPill>Core Training</LabelPill>
+            </div>
+            <div className="col-start-3 h-20 py-2">
+              <NormalBox>
+                <span>Distributed Pre-training<br/>on TPU/GPU Clusters</span>
+              </NormalBox>
+            </div>
+            <div className="col-start-4 h-20">
+              <ArrowRight />
+            </div>
+            <div className="col-start-5 h-20 py-2">
+              <NormalBox>
+                <span>Instruction Tuning<br/>& RLHF for Alignment</span>
+              </NormalBox>
+            </div>
+
+            {/* Row 6 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
+
+            {/* Row 7 */}
+            <div className="col-start-1 h-20 flex justify-end items-center pr-4">
+              <LabelPill>Optimization</LabelPill>
+            </div>
+            <div className="col-start-3 h-20 py-2">
+              <NormalBox>
+                <span>Safety Guardrails<br/>& Bias Mitigation</span>
+              </NormalBox>
+            </div>
+            <div className="col-start-4 h-20">
+              <ArrowRight />
+            </div>
+            <div className="col-start-5 h-20 py-2">
+              <NormalBox>
+                <span>Model Quantization<br/>& Context Scaling</span>
+              </NormalBox>
+            </div>
+
+            {/* Row 8 */}
+            <div className="col-start-3 h-10">
+              <ArrowDown />
+            </div>
+
+            {/* Row 9 */}
+            <div className="col-start-3 h-20 py-2">
+              <GradientBox>
+                <div className="flex items-center justify-between w-full">
+                  <span>Zhiyou 4.5 Pro Nano<br/>(Edge Optimized)</span>
+                  <Sparkles className="text-blue-500 w-6 h-6 ml-2 shrink-0" />
+                </div>
+              </GradientBox>
+            </div>
+
+            {/* Bracket Arrow (Spans Row 3 to 7) */}
+            <div className="col-start-6 row-start-3 row-end-8 h-full relative">
+              <BracketArrow />
+            </div>
+
+            {/* Final Box (Spans Row 3 to 7) */}
+            <div className="col-start-7 row-start-3 row-end-8 h-full flex items-center py-2">
+              <div className="h-28 w-full">
+                <GradientBox>
+                  <div className="flex items-center justify-between w-full">
+                    <span>Zhiyou 4.5 Pro Models<br/>(Cloud & API Ready)</span>
+                    <Sparkles className="text-blue-500 w-6 h-6 ml-2 shrink-0" />
+                  </div>
+                </GradientBox>
+              </div>
+            </div>
+
           </div>
 
         </div>

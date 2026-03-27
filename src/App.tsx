@@ -61,6 +61,64 @@ const BracketArrow = () => (
   </svg>
 );
 
+const modelsData = [
+  {
+    name: "Zhiyou 4.5 Pro",
+    badge: "Flagship",
+    description: "Model paling mutakhir dengan kemampuan penalaran tingkat tinggi, pemrosesan multimodal native (teks, gambar, audio, video), dan akurasi maksimal untuk tugas analitik kompleks.",
+    metrics: [
+      { label: "Penalaran", value: 98, color: "bg-blue-500" },
+      { label: "Pemrograman", value: 95, color: "bg-indigo-500" },
+      { label: "Multimodal", value: 96, color: "bg-purple-500" },
+      { label: "Kecepatan", value: 85, color: "bg-emerald-500" },
+    ]
+  },
+  {
+    name: "Zhiyou 4.5 Lite",
+    badge: "Optimized",
+    description: "Versi ringan dari 4.5 Pro yang dioptimalkan untuk kecepatan dan efisiensi biaya. Sangat ideal untuk tugas sehari-hari, chatbot responsif, dan pemrosesan teks skala besar.",
+    metrics: [
+      { label: "Penalaran", value: 85, color: "bg-blue-400" },
+      { label: "Pemrograman", value: 80, color: "bg-indigo-400" },
+      { label: "Multimodal", value: 82, color: "bg-purple-400" },
+      { label: "Kecepatan", value: 98, color: "bg-emerald-400" },
+    ]
+  },
+  {
+    name: "Zhiyou 4.1 Smart",
+    badge: "Balanced",
+    description: "Generasi transisi yang memperkenalkan pemahaman konteks yang lebih dalam dan efisiensi memori yang lebih baik dibandingkan seri 4.0.",
+    metrics: [
+      { label: "Penalaran", value: 78, color: "bg-blue-300" },
+      { label: "Pemrograman", value: 70, color: "bg-indigo-300" },
+      { label: "Multimodal", value: 65, color: "bg-purple-300" },
+      { label: "Kecepatan", value: 80, color: "bg-emerald-300" },
+    ]
+  },
+  {
+    name: "Zhiyou 4.0",
+    badge: "Legacy",
+    description: "Lompatan besar pertama dalam kemampuan penalaran logis. Model ini mendominasi tugas berbasis teks namun memiliki kemampuan multimodal yang terbatas.",
+    metrics: [
+      { label: "Penalaran", value: 65, color: "bg-blue-200" },
+      { label: "Pemrograman", value: 55, color: "bg-indigo-200" },
+      { label: "Multimodal", value: 40, color: "bg-purple-200" },
+      { label: "Kecepatan", value: 75, color: "bg-emerald-200" },
+    ]
+  },
+  {
+    name: "Zhiyou 3.5",
+    badge: "Classic",
+    description: "Model klasik yang berfokus pada generasi teks cepat dan asisten virtual dasar. Menjadi fondasi bagi perkembangan model-model Zhiyou selanjutnya.",
+    metrics: [
+      { label: "Penalaran", value: 45, color: "bg-blue-100" },
+      { label: "Pemrograman", value: 30, color: "bg-indigo-100" },
+      { label: "Multimodal", value: 10, color: "bg-purple-100" },
+      { label: "Kecepatan", value: 90, color: "bg-emerald-100" },
+    ]
+  }
+];
+
 export default function App() {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center py-16 px-8 font-sans">
@@ -299,6 +357,57 @@ export default function App() {
               </div>
             </div>
 
+          </div>
+
+          {/* DIVIDER 3 */}
+          <div className="h-24 w-full border-b-2 border-dashed border-gray-200 my-12 relative max-w-5xl">
+             <div className="absolute left-1/2 -translate-x-1/2 top-full -translate-y-1/2 bg-white px-6 text-blue-500 text-sm font-bold tracking-widest uppercase flex items-center gap-3">
+                <Sparkles className="w-4 h-4" />
+                Model Evolution Analyzer
+                <Sparkles className="w-4 h-4" />
+             </div>
+          </div>
+
+          {/* ANALYZER SECTION */}
+          <div className="w-full max-w-5xl flex flex-col items-center mt-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 tracking-tight text-center">Evolusi Model Zhiyou dari Generasi ke Generasi</h2>
+            <p className="text-gray-500 mb-12 text-center max-w-2xl">Analisis perbandingan kemampuan, performa, dan spesialisasi dari setiap generasi model AI Zhiyou.</p>
+            
+            <div className="flex flex-col gap-6 w-full">
+              {modelsData.map((model, idx) => (
+                <div key={idx} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+                  {/* Subtle background gradient on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  
+                  <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                    <div className="md:w-1/3 w-full">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-2xl font-bold text-gray-800">{model.name}</h3>
+                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${idx === 0 ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}`}>
+                          {model.badge}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed">{model.description}</p>
+                    </div>
+                    
+                    <div className="md:w-2/3 w-full flex flex-col gap-4 border-l border-gray-100 md:pl-8 pt-4 md:pt-0">
+                      {model.metrics.map((m, mIdx) => (
+                        <div key={mIdx} className="flex items-center gap-4">
+                          <span className="w-28 text-sm font-semibold text-gray-700">{m.label}</span>
+                          <div className="flex-1 h-2.5 bg-gray-100 rounded-full overflow-hidden relative">
+                            <div 
+                              className={`absolute top-0 left-0 h-full ${m.color} rounded-full transition-all duration-1000 ease-out`} 
+                              style={{ width: `${m.value}%` }} 
+                            />
+                          </div>
+                          <span className="w-12 text-right text-sm font-bold text-gray-800">{m.value}%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
